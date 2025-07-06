@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Policies - LifeasHub</title>
+    <style>
+        /* Bu stil bölümü senin verdiğin kodla aynıdır, değişiklik yok */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+        :root{--blurple:#5865F2;--dark-bg:#16181a;--card-bg:#1f2124;--header-bg:rgba(22,24,26,0.85);--text-color:#FFFFFF;--text-muted:#a9b3be;--border-color:rgba(255,255,255,0.1)}
+        *{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth}
+        body{font-family:'Inter',sans-serif;background-color:var(--dark-bg);background-image:radial-gradient(circle at 50% 0%,rgba(88,101,242,0.1),transparent 30%);color:var(--text-color);line-height:1.7}
+        .container{max-width:1200px;margin:0 auto;padding:0 20px}
+        .main-header{background:var(--header-bg);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);padding:15px 0;position:sticky;top:0;z-index:1000;width:100%;border-bottom:1px solid var(--border-color)}
+        .nav-container{display:flex;justify-content:space-between;align-items:center}
+        .logo{font-size:1.5rem;font-weight:800;color:var(--text-color);text-decoration:none}.logo span{color:var(--blurple)}
+        .nav-links a{color:var(--text-muted);text-decoration:none;margin-left:30px;font-weight:500;transition:color .3s ease}.nav-links a:hover{color:var(--text-color)}
+        section{padding:80px 20px}.section-title{text-align:center;font-size:3rem;margin-bottom:40px;font-weight:700}
+        .content-card{background-color:var(--card-bg);padding:40px;border-radius:12px;max-width:800px;margin:0 auto 30px auto;border:1px solid var(--border-color)}
+        .content-card h3{color:var(--blurple);margin-bottom:20px;font-size:1.8rem;border-bottom:1px solid var(--border-color);padding-bottom:10px}
+        .content-card h4{color:var(--text-color);font-size:1.2rem;margin-top:25px;margin-bottom:10px}
+        .content-card p,.content-card li{color:var(--text-muted);margin-bottom:15px;font-size:1rem;line-height:1.8}
+        .content-card ul{padding-left:20px}
+        footer{text-align:center;padding:50px 20px;background-color:var(--dark-bg);margin-top:60px;border-top:1px solid var(--border-color);color:var(--text-muted)}
+        @media (max-width:768px){.nav-container{flex-direction:column;gap:10px}.nav-links{text-align:center}.nav-links a{margin:0 10px;font-size:.9rem}.section-title{font-size:2.2rem;margin-bottom:40px}.content-card{padding:30px}}
+    </style>
+</head>
+<body>
+    
+    <header class="main-header">
+        <div class="nav-container">
+            <a href="/" class="logo">Lifeas<span>Hub</span></a>
+            <nav class="nav-links">
+                <a href="/#pricing">Pricing</a>
+                <a href="/#community">Discord</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="policies">
+            <div class="container">
+                <h2 class="section-title">Legal Information</h2>
+                <div class="content-card">
+                    <h3>Terms of Service</h3>
+
+                    <h4>1. Agreement to Terms</h4>
+                    <p>By purchasing access to the LifeasHub "Logs Channel" service ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, do not purchase or use the Service.</p>
+
+                    <h4>2. Service Description</h4>
+                    <p>The Service consists of access to a private Discord channel where LifeasHub provides a real-time, curated data feed of in-game events. The purchase grants you access to view this informational data feed.</p>
+
+                    <h4>3. Prohibited Uses</h4>
+                    <p>Access to the Service is for your personal, non-commercial use only. You agree not to:</p>
+                    <ul>
+                        <li>Share, sell, or redistribute the data provided in the Service.</li>
+                        <li>Share your access to the private Discord channel with any third party.</li>
+                        <li>Use the information provided by the Service for any illegal purpose or in a manner that violates any third-party Terms of Service.</li>
+                    </ul>
+
+                    <h4>4. Disclaimer of Warranties</h4>
+                    <p>The Service and the data within are provided "as is," without any warranties of any kind. LifeasHub does not warrant that the data will always be accurate, complete, or available, as it is dependent on publicly available information. We are not responsible for any actions taken against your game accounts based on how you use this information.</p>
+                </div>
+                <div class="content-card">
+                    <h3>Privacy & Refund Policy</h3>
+                    <p><strong>Privacy:</strong> We only receive your email address from our payment processor to grant you access to our Discord server and for purchase verification. We will never sell or share your data.</p>
+                    <p><strong>Refunds:</strong> Due to the nature of digital services and the instant granting of access to our private data channel, all sales are final. We do not offer refunds for any reason once access has been provided.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="philosophy">
+            <div class="container">
+                <h2 class="section-title">Our Philosophy</h2>
+                <div class="content-card">
+                     <p>In the vast digital arenas where legends are forged, true mastery demands focus, precision, and the right tools. We, the creators of LifeasHub, are not just developers; we are gamers who have walked the same paths and yearned for that elusive edge.</p>
+                     <p>LifeasHub is our answer to the noise and inefficiencies that hinder peak performance. Our mission is to forge tools and data services that are not only powerful but also intuitive and elegant—tools that respect the player's skill and intelligence, allowing strategy and performance to take center stage.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 LifeasHub. All Rights Reserved.</p>
+            <p>LifeasHub is an independent software and is not affiliated with any game development studios.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
