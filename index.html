@@ -22,6 +22,7 @@
             --text-muted: #a9b3be;
             --disabled-color: #3a3f48;
             --success-green: #2DCA72;
+            --denied-red: #f25858;
             --border-color: rgba(255, 255, 255, 0.1);
             --box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
             --gold-color: #FFD700;
@@ -178,7 +179,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
-            align-items: center;
+            align-items: stretch; 
         }
         .step-card, .feature-card, .content-card {
             background: var(--card-bg);
@@ -256,20 +257,29 @@
             list-style: none;
             margin: 30px 0;
             text-align: left;
-            color: var(--text-muted);
         }
         .features-list li {
             margin-bottom: 15px;
             display: flex;
             align-items: center;
             font-size: 1.1rem;
+            color: var(--text-color);
         }
         .features-list li svg {
-            fill: var(--success-green);
             min-width: 22px;
             height: 22px;
             margin-right: 12px;
         }
+        .features-list li .icon-check {
+             fill: var(--success-green);
+        }
+        .features-list li.feature-denied {
+            color: var(--text-muted);
+        }
+        .features-list li.feature-denied .icon-cross {
+            fill: var(--denied-red);
+        }
+
         .buy-button-wrapper {
             text-align: center;
             margin-top: auto;
@@ -317,7 +327,7 @@
         }
          .terms-agreement label a:hover {
             color: var(--text-color);
-        }
+         }
 
         /* FAQ */
         .faq-container { max-width: 800px; margin: 0 auto; }
@@ -343,7 +353,7 @@
             }
              .pricing-card.recommended:hover {
                 transform: translateY(-10px);
-            }
+             }
              .pricing-grid {
                  grid-template-columns: 1fr;
              }
@@ -403,9 +413,18 @@
                             <h3>Weekly Key</h3>
                             <div class="price">$8<span>/week</span></div>
                             <ul class="features-list">
-                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>Full Feature Access</li>
-                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>7-Day License Key</li>
-                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>Standard Support</li>
+                                <li class="feature-denied">
+                                    <svg class="icon-cross" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"></path></svg>
+                                    Brainrot Finder Premium
+                                </li>
+                                <li>
+                                    <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+                                    Script Access for 1 Week
+                                </li>
+                                <li>
+                                    <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+                                    Standard Support
+                                </li>
                             </ul>
                         </div>
                         <div class="buy-button-wrapper">
@@ -418,9 +437,18 @@
                             <h3>Logs Channel</h3>
                             <div class="price">$17<span>/month</span></div>
                             <ul class="features-list">
-                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>Full Script Access</li>
-                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>Monthly Script Key</li>
-                                <li><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>Priority Discord Support</li>
+                                <li>
+                                    <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+                                    Brainrot Finder Premium
+                                </li>
+                                <li>
+                                    <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+                                    1 Month Full Access
+                                </li>
+                                <li>
+                                    <svg class="icon-check" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"></path></svg>
+                                    Priority Discord Support
+                                </li>
                             </ul>
                         </div>
                         <div class="buy-button-wrapper">
@@ -456,7 +484,7 @@
                     <details class="faq-item reveal reveal-4"><summary>What if I need help?</summary><div class="faq-answer"><p>We offer dedicated support through our Discord server. Join the community to get help from staff and other experienced users.</p></div></details>
                 </div>
            </div>
-     </section>
+      </section>
       <section id="community">
           <div class="container">
               <div class="discord-section reveal">
@@ -477,13 +505,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- MERKEZİ ŞARTLAR KUTUCUĞU KONTROLÜ (TÜM BUTONLAR İÇİN) ---
+            // --- GLOBAL TERMS CHECKBOX LOGIC ---
+            // The checkbox in the monthly card controls ALL purchase buttons in the pricing grid.
             const globalTermsCheckbox = document.getElementById('global-terms-checkbox');
             const allPurchaseButtons = document.querySelectorAll('.pricing-grid .cta-button');
 
             function toggleAllButtonsState() {
                 if (globalTermsCheckbox) {
-                    // Checkbox işaretli değilse butonları devre dışı bırak, işaretliyse etkinleştir.
+                    // Disable all buttons if the checkbox is not checked.
                     const areDisabled = !globalTermsCheckbox.checked;
                     allPurchaseButtons.forEach(button => {
                         button.disabled = areDisabled;
@@ -491,14 +520,13 @@
                 }
             }
 
-            // Sayfa yüklendiğinde ve checkbox her değiştiğinde durumu kontrol et
+            // Set the initial state and add listener only if elements exist.
             if (globalTermsCheckbox && allPurchaseButtons.length > 0) {
-                toggleAllButtonsState(); // Sayfa ilk açıldığında butonları devre dışı bırak
-                globalTermsCheckbox.addEventListener('change', toggleAllButtonsState);
+                toggleAllButtonsState(); // Set initial button state on page load
+                globalTermsCheckbox.addEventListener('change', toggleAllButtonsState); // Update on change
             }
 
-
-            // --- SCROLL ANİMASYONLARI İÇİN KOD ---
+            // --- SCROLL ANIMATIONS ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -512,7 +540,7 @@
                 observer.observe(el);
             });
 
-            // --- SSS (FAQ) AÇILMA ANİMASYONU İÇİN KOD ---
+            // --- FAQ ACCORDION ANIMATION ---
             document.querySelectorAll('.faq-item').forEach(item => {
                 const summary = item.querySelector('summary');
                 const answer = item.querySelector('.faq-answer');
