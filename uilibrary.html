@@ -87,7 +87,7 @@
         }
 
         .content {
-            margin-left: 260px; /* Same as sidebar width */
+            margin-left: 260px;
             padding: 40px 50px;
             width: calc(100% - 260px);
             box-sizing: border-box;
@@ -116,6 +116,13 @@
             margin-top: 40px;
             margin-bottom: 20px;
         }
+
+        h4 {
+            font-size: 1.2rem;
+            color: var(--header-color);
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
         
         p, li {
             font-size: 1rem;
@@ -135,13 +142,13 @@
             word-wrap: break-word;
             color: #b9bbbe;
             font-family: 'Source Code Pro', monospace;
+            font-size: 0.95rem;
         }
 
         code {
             font-family: 'Source Code Pro', monospace;
         }
         
-        /* Inline code */
         :not(pre) > code {
             background-color: var(--surface-color);
             color: var(--primary-color);
@@ -205,6 +212,8 @@
                 <li><a href="#initialization">Initialization</a></li>
                 <li><a href="#tabs">Tabs</a></li>
                 <li><a href="#elements">Elements</a></li>
+                <li><a href="#themes">Themes</a></li>
+                <li><a href="#config-management">Config Management</a></li>
                 <li><a href="#advanced-features">Advanced Features</a></li>
                 <li><a href="#example">Full Example</a></li>
             </ul>
@@ -214,15 +223,14 @@
             <section id="introduction">
                 <h2>Welcome to the <span class="highlight">LifeasHub</span> UI Library</h2>
                 <p>This document is designed to help you understand all the features and usage of the LifeasHub UI library. With its modern, flexible, and customizable structure, you can easily create stylish interfaces for your projects.</p>
-                <p>The library is built on a tabbed structure and offers many ready-to-use elements such as buttons, sliders, and dropdown menus. It also comes with advanced features like theme management and a modern notification system. You can find more info at <a href="https://www.lifeashub.store/uilibrary" target="_blank" style="color: var(--primary-color);">our official website</a>.</p>
+                <p>The library is built on a tabbed structure and offers many ready-to-use elements such as buttons, sliders, and dropdown menus. It also comes with advanced features like theme management, a modern notification system, and a flexible configuration system. You can find more info at <a href="https://www.lifeashub.store/uilibrary" target="_blank" style="color: var(--primary-color);">our official website</a>.</p>
             </section>
 
             <section id="setup">
                 <h2>Setup</h2>
-                <p>Adding the library to your project is very simple. Just paste the following code into a <code>LocalScript</code> to execute it.</p>
+                <p>The library is executed via <code>loadstring</code>. This is the only line you need to run the library and get access to its functions.</p>
                 <div class="code-block-wrapper">
-                    <pre><code>-- Execute the main script from its source
-loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/lifeashub/refs/heads/main/better"))()</code></pre>
+                    <pre><code>local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/lifeashub/refs/heads/main/better"))()</code></pre>
                     <button class="copy-button">Copy</button>
                 </div>
             </section>
@@ -231,24 +239,17 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/lifeashub/r
                 <h2>Initializing the Library <span class="highlight">Library:Init</span></h2>
                 <p>The <code>Library:Init()</code> function is used to create the main window of the interface. This function takes a table containing the basic settings for the window and returns a <code>Window</code> object that you can work with.</p>
                  <div class="code-block-wrapper">
-                    <pre><code>-- Assuming your main script returns the library table
-local LifeasHubLibrary = loadstring(game:HttpGet("..."))() -- This is just an example path
-
-local Window = LifeasHubLibrary:Init({
-    name = "PROJECT NAME",
-    name2 = "LifeasHub",
-    name3 = "v1.0 | by Your Name",
+                    <pre><code>local Window = Library:Init({
+    name = "PROJECT",
+    name2 = "NAME",
+    name3 = "v1.0 | GAME NAME",
+    folderName = "MyProjectConfigs",
     defaultTheme = "Blurple",
     defaultThemeLevel = 1,
     notificationPlace = "bottom",
     minimizeFrame = {
         enabled = true,
-        icon = 'rbxassetid://13529889528',
-        size = UDim2.new(0, 50, 0, 50),
-        position = UDim2.new(0, 20, 0.5, -25),
-        backgroundColor = Color3.fromRGB(30, 30, 30),
-        backgroundTransparency = 0.1,
-        imageColor = Color3.fromRGB(88, 101, 242)
+        icon = 'rbxassetid://13529889528'
     }
 })</code></pre>
                     <button class="copy-button">Copy</button>
@@ -260,6 +261,7 @@ local Window = LifeasHubLibrary:Init({
                         <tr><td><code>name</code></td><td>string</td><td>The main title in the top-left corner of the window.</td></tr>
                         <tr><td><code>name2</code></td><td>string</td><td>The second, colored title that appears next to the main title.</td></tr>
                         <tr><td><code>name3</code></td><td>string</td><td>A subtitle that appears to the right of the titles (e.g., version).</td></tr>
+                        <tr><td><code>folderName</code></td><td>string</td><td>The name of the folder where your configuration files will be saved.</td></tr>
                         <tr><td><code>defaultTheme</code></td><td>string</td><td>The initial theme. E.g., 'Red', 'Green', 'Blurple'.</td></tr>
                         <tr><td><code>defaultThemeLevel</code></td><td>integer</td><td>Background theme intensity (0: Off, 1: Standard, 2: Intense).</td></tr>
                         <tr><td><code>notificationPlace</code></td><td>string</td><td>Sets notification position. Options: 'up' (top-right, default), 'bottom' (bottom-right).</td></tr>
@@ -302,105 +304,209 @@ MainTab:Activate()</code></pre>
 
                 <h3>Button</h3>
                 <p>A standard button that performs an action when clicked.</p>
-                <div class="code-block-wrapper">
-                    <pre><code>MainTab:Button({
-    name = "Send Notification",
+                <h4>Parameters</h4>
+                <table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>name</code></td><td>string</td><td>The text displayed on the button.</td></tr><tr><td><code>callback</code></td><td>function</td><td>The function to run when the button is clicked.</td></tr></tbody></table>
+                <h4>Example</h4>
+                <div class="code-block-wrapper"><pre><code>MainTab:Button({
+    name = "Execute Action",
     callback = function()
-        Window:Notify({title="Success!", content="The button works!", type="success"})
+        print("Button was clicked!")
+        Window:Notify({title="Action", content="The button was executed."})
     end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
+})</code></pre><button class="copy-button">Copy</button></div>
                 
                 <h3>Toggle</h3>
-                <p>A switch that can be turned on or off.</p>
-                 <div class="code-block-wrapper">
-                    <pre><code>SettingsTab:Toggle({
-    title = "Show ESP",
+                <p>A switch that can be turned on or off. Its state is automatically saved by the config system.</p>
+                <h4>Parameters</h4>
+                <table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>title</code></td><td>string</td><td>The text label for the toggle.</td></tr><tr><td><code>default</code></td><td>boolean</td><td>(Optional) The initial state of the toggle (<code>true</code> for on, <code>false</code> for off). Defaults to <code>false</code>.</td></tr><tr><td><code>callback</code></td><td>function</td><td>The function to run when the toggle's state changes. It receives the new state as an argument (e.g., <code>function(isEnabled)</code>).</td></tr></tbody></table>
+                <h4>Example</h4>
+                <div class="code-block-wrapper"><pre><code>SettingsTab:Toggle({
+    title = "Enable Feature",
+    default = true, -- Starts in the "on" state
     callback = function(isEnabled)
-        print("ESP status: ", isEnabled)
+        print("Feature is now:", isEnabled)
     end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
+})</code></pre><button class="copy-button">Copy</button></div>
 
                 <h3>Slider</h3>
-                <p>Used to select a numerical value within a specific range.</p>
-                 <div class="code-block-wrapper">
-                    <pre><code>SettingsTab:Slider({
+                <p>Used to select a numerical value within a specific range. Its value is automatically saved by the config system.</p>
+                <h4>Parameters</h4>
+                <table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>title</code></td><td>string</td><td>The text label for the slider.</td></tr><tr><td><code>min</code></td><td>number</td><td>The minimum value of the slider.</td></tr><tr><td><code>max</code></td><td>number</td><td>The maximum value of the slider.</td></tr><tr><td><code>default</code></td><td>number</td><td>(Optional) The initial value of the slider.</td></tr><tr><td><code>callback</code></td><td>function</td><td>The function to run when the slider's value changes. It receives the new value as an argument (e.g., <code>function(value)</code>).</td></tr></tbody></table>
+                <h4>Example</h4>
+                <div class="code-block-wrapper"><pre><code>SettingsTab:Slider({
     title = "WalkSpeed",
     min = 16,
     max = 100,
-    default = 16,
+    default = 25,
     callback = function(value)
-        print("New walk speed: ", value)
+        print("WalkSpeed set to:", value)
     end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
+})</code></pre><button class="copy-button">Copy</button></div>
 
                 <h3>Dropdown</h3>
-                <p>A dropdown menu used for single or multiple selections from a list.</p>
-                 <div class="code-block-wrapper">
-                    <pre><code>SettingsTab:Dropdown({
-    title = "Target Part",
-    items = {"Head", "Torso", "Legs"},
+                <p>A dropdown menu for single or multiple selections. Its selected item(s) are automatically saved by the config system.</p>
+                <h4>Parameters</h4>
+                <table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>title</code></td><td>string</td><td>The text label for the dropdown.</td></tr><tr><td><code>items</code></td><td>table</td><td>A list of strings to populate the dropdown options.</td></tr><tr><td><code>multiSelect</code></td><td>boolean</td><td>(Optional) If <code>true</code>, allows selecting multiple options. Defaults to <code>false</code>.</td></tr><tr><td><code>callback</code></td><td>function</td><td>The function to run when a selection is made. If multi-select is off, it receives the selected string. If it's on, it receives a table of selected items.</td></tr></tbody></table>
+                <h4>Examples</h4>
+                <div class="code-block-wrapper"><pre><code>-- Single-select example
+SettingsTab:Dropdown({
+    title = "Target Priority",
+    items = {"Closest", "Lowest Health", "Highest Threat"},
     multiSelect = false,
-    callback = function(selected)
-        print("Selected target: ", selected)
+    callback = function(selectedItem)
+        print("New priority:", selectedItem)
     end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
+})
+
+-- Multi-select example
+SettingsTab:Dropdown({
+    title = "ESP Options",
+    items = {"Boxes", "Names", "Tracers", "Health"},
+    multiSelect = true,
+    callback = function(selectedTable)
+        print("ESP options updated:")
+        for option, isSelected in pairs(selectedTable) do
+            if isSelected then
+                print("-", option)
+            end
+        end
+    end
+})</code></pre><button class="copy-button">Copy</button></div>
 
                 <h3>TextInput</h3>
-                <p>A box for getting text input from the user.</p>
-                <div class="code-block-wrapper">
-                    <pre><code>MainTab:TextInput({
-    title = "Custom Name",
-    placeholder = "Enter your new name...",
+                <p>A box for user text input. Its content is automatically saved by the config system.</p>
+                <h4>Parameters</h4>
+                <table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>title</code></td><td>string</td><td>The text label for the input box.</td></tr><tr><td><code>placeholder</code></td><td>string</td><td>(Optional) The placeholder text shown when the box is empty.</td></tr><tr><td><code>callback</code></td><td>function</td><td>The function to run when the user presses Enter. It receives the input text as an argument.</td></tr></tbody></table>
+                <h4>Example</h4>
+                <div class="code-block-wrapper"><pre><code>MainTab:TextInput({
+    title = "Custom Welcome Message",
+    placeholder = "Enter a message...",
     callback = function(text)
-        Window:Notify({title="Name Changed", content = "Your new name is: " .. text})
+        Window:Notify({title="Message Set", content = "Your message is: " .. text})
     end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
+})</code></pre><button class="copy-button">Copy</button></div>
 
                 <h3>Label</h3>
                 <p>Used to separate groups of elements or to add a heading to a section.</p>
-                <div class="code-block-wrapper">
-                    <pre><code>SettingsTab:Label({message = "General Settings"})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
+                <h4>Parameters</h4>
+                <table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>message</code></td><td>string</td><td>The text to display in the label.</td></tr></tbody></table>
+                <h4>Example</h4>
+                <div class="code-block-wrapper"><pre><code>SettingsTab:Label({message = "Visual Settings"})</code></pre><button class="copy-button">Copy</button></div>
 
                 <h3>Paragraph</h3>
                 <p>An informational box containing a title, a long description, and an optional image.</p>
+                <h4>Parameters</h4>
+                <table><thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead><tbody><tr><td><code>title</code></td><td>string</td><td>The title of the paragraph box.</td></tr><tr><td><code>content</code></td><td>string</td><td>The main text content.</td></tr><tr><td><code>image</code></td><td>string</td><td>(Optional) A Roblox asset ID (e.g., <code>rbxassetid://...</code>) for an image to display at the top of the paragraph.</td></tr></tbody></table>
+                <h4>Examples</h4>
+                <div class="code-block-wrapper"><pre><code>-- Paragraph without an image
+MainTab:Paragraph({
+    title = "Welcome!",
+    content = "This script has many features. Explore the tabs to find out more."
+})
+
+-- Paragraph with an image
+MainTab:Paragraph({
+    title = "Update Information",
+    content = "A new version has been released with major bug fixes and performance improvements.",
+    image = "rbxassetid://6019884959" -- Example Image
+})</code></pre><button class="copy-button">Copy</button></div>
+            </section>
+
+            <section id="themes">
+                <h2>Theme <span class="highlight">Management</span></h2>
+                <p>The library includes a robust theme system to change the UI's appearance in real-time. You can control the accent colors and background colors separately.</p>
+
+                <h3>Set Theme <span class="highlight">Window:SetTheme</span></h3>
+                <p>This function changes the primary accent color of the UI elements like highlights, sliders, and dropdowns. The following themes are available:</p>
+                <ul>
+                    <li><code>Red</code></li>
+                    <li><code>Green</code></li>
+                    <li><code>Dark Green</code></li>
+                    <li><code>White</code></li>
+                    <li><code>Black</code></li>
+                    <li><code>Purple</code></li>
+                    <li><code>Blurple</code></li>
+                </ul>
                 <div class="code-block-wrapper">
-                    <pre><code>MainTab:Paragraph({
-    title = "About The Project",
-    content = "This UI was designed to provide the best user experience.",
-    image = "rbxassetid://6019884959"
+                    <pre><code>-- Example of changing the theme with a dropdown
+SettingsTab:Dropdown({
+    title = "UI Theme",
+    items = {"Red", "Green", "Dark Green", "White", "Black", "Purple", "Blurple"},
+    callback = function(selectedTheme)
+        Window:SetTheme(selectedTheme)
+    end
 })</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
+                <h3>Set Background Theme Level <span class="highlight">Window:SetBackgroundThemeLevel</span></h3>
+                <p>This function controls how much the chosen theme affects the background colors of the window and its components.</p>
+                 <table>
+                    <thead><tr><th>Level</th><th>Name</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>0</code></td><td>Off</td><td>Backgrounds remain the default dark color, regardless of the theme.</td></tr>
+                        <tr><td><code>1</code></td><td>Standard</td><td>Backgrounds change to match the selected theme's color palette.</td></tr>
+                        <tr><td><code>2</code></td><td>Intense</td><td>Backgrounds are tinted with the theme's main accent color for a more vibrant look.</td></tr>
+                    </tbody>
+                </table>
+                <div class="code-block-wrapper">
+                    <pre><code>-- Example of controlling the intensity with a slider
+SettingsTab:Slider({
+    title = "Background Intensity",
+    min = 0, max = 2, default = 1,
+    callback = function(value)
+        local intValue = math.floor(value + 0.5) -- Round to 0, 1, or 2
+        Window:SetBackgroundThemeLevel(intValue)
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+            </section>
+
+            <section id="config-management">
+                <h2>Configuration Management</h2>
+                <p>The library provides functions to save, load, and list user configurations. These functions allow you to build your own settings menu with full control.</p>
+                
+                <h3>Save Config <span class="highlight">Window:SaveConfig</span></h3>
+                <p>Saves the current state of all Toggles, Sliders, Dropdowns, and TextInputs to a file within the <code>folderName</code> you specified during initialization.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>Window:SaveConfig("my_settings") -- Saves settings to 'MyProjectConfigs/my_settings.json'</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
+                <h3>Load Config <span class="highlight">Window:LoadConfig</span></h3>
+                <p>Loads the settings from a specified file and updates the UI elements accordingly.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>Window:LoadConfig("my_settings") -- Loads settings from 'MyProjectConfigs/my_settings.json'</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
+                <h3>Get Configurations <span class="highlight">Window:GetConfigurations</span></h3>
+                <p>Returns a table containing the names of all saved configuration files in your specified folder.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>local savedConfigs = Window:GetConfigurations()
+for i, configName in ipairs(savedConfigs) do
+    print("Found config:", configName)
+end</code></pre>
                     <button class="copy-button">Copy</button>
                 </div>
             </section>
             
             <section id="advanced-features">
                 <h2>Advanced Features</h2>
-                <p>Powerful features offered by the library beyond the basic elements.</p>
                 
                 <h3>Notification System <span class="highlight">Window:Notify</span></h3>
                 <p>Displays modern, animated notifications. Position can be set during initialization.</p>
                  <div class="code-block-wrapper">
-                    <pre><code>-- Notification with an icon
+                    <pre><code>-- Notification with a status icon
 Window:Notify({
     title = "Warning!",
     content = "You are about to reset the settings.",
-    type = "warning",
+    type = "warning", -- Options: "success", "error", "warning", "info"
     duration = 4
 })
 
--- Notification with a banner image
+-- Notification with a custom banner image
 Window:Notify({
     title = "Update Available!",
     content = "Version 2.0 has been released.",
@@ -409,108 +515,148 @@ Window:Notify({
 })</code></pre>
                     <button class="copy-button">Copy</button>
                 </div>
-
-                <h3>Theme Management</h3>
-                <p>You can change the colors and theme of the interface in real-time.</p>
-                <p><code>Window:SetTheme(themeName)</code>: Changes the accent color of the interface.</p>
-                <p><code>Window:SetBackgroundThemeLevel(level)</code>: Sets how much the background is affected by the theme.</p>
             </section>
 
             <section id="example">
                 <h2>Full <span class="highlight">Example</span></h2>
-                <p>This is an example of how you might use the library, assuming the main script returns the library functions in a table called <code>LifeasHubLibrary</code>. The actual implementation might differ based on the script at the provided URL.</p>
+                <p>This is a complete example demonstrating how to initialize the library and build a feature-rich UI, including a custom settings menu that uses all theme and configuration functions.</p>
                 <div class="code-block-wrapper">
-                    <pre><code>-- The main script is executed from the new URL.
--- The following is a usage example based on the library's documented functions.
--- You might need to adapt this code depending on how the main script works.
+                    <pre><code>-- 1. Load the library using loadstring
+local Library
+local success, result = pcall(function()
+    Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/lifeashub/refs/heads/main/better"))()
+end)
 
--- For this example to work, we'll assume the main script returns a library table.
-local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/lifeashub/refs/heads/main/better"))()
-
--- Check if the library was returned successfully before using it
-if not LifeasHubLibrary or not LifeasHubLibrary.Init then
-    warn("LifeasHub Library did not load correctly or is a self-executing script.")
+if not success or not Library or not Library.Init then
+    warn("LifeasHub Library failed to load.")
     return
 end
 
--- 2. Initialize the main window with all features
-local Window = LifeasHubLibrary:Init({
-    name = "LifeasHub DEMO",
-    name2 = "v3.2",
-    name3 = "by LifeasHub Team",
+-- 2. Initialize the main window using the specified settings
+local Window = Library:Init({
+    name = "PROJECT",
+    name2 = "NAME",
+    name3 = "v1.0 | GAME NAME",
+    folderName = "MyProjectConfigs",
     defaultTheme = "Blurple",
     defaultThemeLevel = 1,
-    notificationPlace = "bottom", -- Can be 'up' or 'bottom'
-    
-    -- // Minimized Frame Customization //
+    notificationPlace = "bottom",
     minimizeFrame = {
         enabled = true,
-        icon = 'rbxassetid://13529889528',
-        size = UDim2.new(0, 50, 0, 50),
-        position = UDim2.new(0, 20, 0.5, -25),
-        backgroundColor = Color3.fromRGB(30, 30, 30),
-        backgroundTransparency = 0.1,
-        imageColor = Color3.fromRGB(88, 101, 242) -- Blurple to match default theme
+        icon = 'rbxassetid://13529889528'
     }
 })
 
--- 3. Create tabs
-local MainTab = Window:CreateTab({ name = 'Showcase' })
-local SettingsTab = Window:CreateTab({ name = 'Options' })
-local MiscTab = Window:CreateTab({ name = 'Misc Tests' })
+-- 3. Create all the necessary tabs
+local MainTab = Window:CreateTab({ name = "Main" })
+local VisualsTab = Window:CreateTab({ name = "Visuals" })
+local SettingsTab = Window:CreateTab({ name = "Settings" })
 
 --================================================================================--
--- TAB 1: SHOWCASE
+-- TAB 1: MAIN - Demonstrates primary action elements
 --================================================================================--
 
 MainTab:Paragraph({
-    title = "Welcome to the Showcase!",
-    content = "This tab demonstrates various notification types and user input elements. Notifications will appear at the bottom-right because of the 'notificationPlace' setting. You can also minimize this window to see the custom frame.",
-    image = "rbxassetid://6019884959" -- Example Image
+    title = "Welcome to the Full Showcase!",
+    content = "This UI demonstrates all available features. This tab shows common use-cases like toggles and inputs. The 'Visuals' tab contains ESP and graphics options, and the 'Settings' tab allows you to manage themes and save your configuration.",
+    image = "rbxassetid://6019884959"
 })
 
-MainTab:Label({message = "Notification Tests"})
+MainTab:Label({ message = "Combat Options" })
 
-MainTab:Button({
-    name = "Success Notification",
-    callback = function()
-        Window:Notify({title="Success", content="The operation was completed successfully.", type="success"})
+MainTab:Toggle({
+    title = "Enable Aimbot",
+    callback = function(isEnabled)
+        print("Aimbot status:", isEnabled)
+        Window:Notify({ title = "Aimbot", content = "Aimbot has been " .. (isEnabled and "enabled." or "disabled."), type = "info" })
     end
 })
 
-MainTab:Button({
-    name = "Error Notification",
-    callback = function()
-        Window:Notify({title="Error!", content="Failed to connect to the server.", type="error"})
+MainTab:Dropdown({
+    title = "Aimbot Target Part",
+    items = {"Head", "Torso", "HumanoidRootPart"},
+    multiSelect = false, -- Single-select dropdown example
+    callback = function(selectedPart)
+        print("Aimbot target set to:", selectedPart)
     end
 })
 
-MainTab:Button({
-    name = "Warning Notification",
-    callback = function()
-        Window:Notify({title="Warning", content="Your settings are not saved.", type="warning"})
-    end
-})
+MainTab:Label({ message = "Player Movement" })
 
-MainTab:Label({message = "Input Example"})
-
-MainTab:TextInput({
-    title = "Enter a message",
-    placeholder = "Type something here...",
+local walkspeedInput = MainTab:TextInput({
+    title = "Custom WalkSpeed",
+    placeholder = "Enter a number (e.g., 50)...",
     callback = function(text)
-        if text and #text > 0 then
-            Window:Notify({title="Message Sent", content = "You entered: " .. text, type="info"})
+        print("Walkspeed input changed to:", text)
+    end
+})
+
+MainTab:Button({
+    name = "Apply WalkSpeed",
+    callback = function()
+        local speedValue = tonumber(walkspeedInput:GetText())
+        if speedValue then
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = speedValue
+            Window:Notify({ title = "Success", content = "WalkSpeed set to " .. speedValue, type = "success" })
         else
-            Window:Notify({title="Oops!", content = "You didn't enter anything.", type="warning"})
+            Window:Notify({ title = "Error", content = "Invalid number for WalkSpeed.", type = "error" })
         end
     end
 })
 
+
 --================================================================================--
--- TAB 2: OPTIONS
+-- TAB 2: VISUALS - Demonstrates visual customization elements
 --================================================================================--
 
-SettingsTab:Label({message = "Theme Controls"})
+VisualsTab:Label({ message = "Player ESP Settings" })
+
+VisualsTab:Toggle({
+    title = "Enable Player ESP",
+    default = true, -- Example of a toggle that starts as ON
+    callback = function(isEnabled)
+        print("Player ESP status:", isEnabled)
+    end
+})
+
+VisualsTab:Dropdown({
+    title = "ESP Features",
+    items = {"Boxes", "Names", "Tracers", "Health Bar"},
+    multiSelect = true, -- Multi-select dropdown example
+    callback = function(selectedItems)
+        print("Current ESP features:")
+        local enabledFeatures = {}
+        for feature, isSelected in pairs(selectedItems) do
+            if isSelected then
+                table.insert(enabledFeatures, feature)
+            end
+        end
+        if #enabledFeatures > 0 then
+            Window:Notify({ title = "ESP Updated", content = "Enabled: " .. table.concat(enabledFeatures, ", ") })
+        else
+            Window:Notify({ title = "ESP Updated", content = "All ESP features are disabled.", type = "warning" })
+        end
+    end
+})
+
+VisualsTab:Label({ message = "World & View" })
+
+VisualsTab:Slider({
+    title = "Field of View (FOV)",
+    min = 70,
+    max = 120,
+    default = 80,
+    callback = function(value)
+        workspace.CurrentCamera.FieldOfView = value
+    end
+})
+
+
+--================================================================================--
+-- TAB 3: SETTINGS - Demonstrates theme and config management
+--================================================================================--
+
+SettingsTab:Label({ message = "Theme Controls" })
 
 SettingsTab:Dropdown({
     title = "UI Theme",
@@ -527,61 +673,61 @@ SettingsTab:Slider({
     max = 2,
     default = 1,
     callback = function(value)
-        local intValue = math.floor(value + 0.5) -- Round to nearest integer
+        local intValue = math.floor(value + 0.5)
         Window:SetBackgroundThemeLevel(intValue)
     end
 })
 
-SettingsTab:Label({message = "General Visuals"})
+SettingsTab:Label({ message = "Configuration Management" })
 
-SettingsTab:Toggle({
-    title = "Enable Glow Effect",
-    callback = function(isEnabled)
-        print("Glow effect is now:", isEnabled)
+local ConfigsDropdown = SettingsTab:Dropdown({
+    title = "Available Configs",
+    items = {},
+    callback = function(selectedConfig)
+        Window:LoadConfig(selectedConfig)
     end
 })
 
-SettingsTab:Slider({
-    title = "Field of View",
-    min = 70,
-    max = 120,
-    default = 80,
-    callback = function(value)
-        print("FOV set to: ", value)
+local refreshButton = SettingsTab:Button({
+    name = "Refresh Configs",
+    callback = function()
+        ConfigsDropdown:Clear()
+        local configFiles = Window:GetConfigurations()
+        for _, configName in ipairs(configFiles) do
+            ConfigsDropdown:Add(configName, configName)
+        end
+        Window:Notify({title="Refreshed", content= #configFiles .. " configs found.", type="info"})
     end
 })
 
---================================================================================--
--- TAB 3: MISCELLANEOUS TESTS
---================================================================================--
-MiscTab:Paragraph({
-    title = "More Element Tests",
-    content = "This tab contains various elements for testing different configurations."
+local NewConfigInput = SettingsTab:TextInput({
+    title = "New Config Name",
+    placeholder = "E.g: pvp_settings"
 })
 
-MiscTab:Dropdown({
-    title = "ESP Features (Multiple)",
-    items = {"Boxes", "Names", "Tracers", "Health"},
-    multiSelect = true,
-    callback = function(selectedItems)
-        for item, isSelected in pairs(selectedItems) do
-            if isSelected then
-                print("- " .. item)
+SettingsTab:Button({
+    name = "Save Current Config",
+    callback = function()
+        local configName = NewConfigInput:GetText()
+        if configName and #configName > 0 then
+            Window:SaveConfig(configName)
+            if refreshButton then
+                refreshButton.options.callback()
             end
+        else
+            Window:Notify({title = "Warning", content = "Please enter a valid file name.", type = "warning"})
         end
     end
 })
 
-MiscTab:Toggle({
-    title = "Team Check (Default On)",
-    default = true,
-    callback = function(isEnabled)
-        print("Team check status is now: ", isEnabled)
-    end
-})
 
--- 6. Activate the first tab to make it visible
-MainTab:Activate()</code></pre>
+-- 4. Activate the main tab to make it visible on start
+MainTab:Activate()
+
+-- 5. Initially populate the config list by triggering the refresh function
+if refreshButton then
+    refreshButton.options.callback()
+end</code></pre>
                     <button class="copy-button">Copy</button>
                 </div>
             </section>
@@ -590,7 +736,6 @@ MainTab:Activate()</code></pre>
     </div>
 
     <script>
-        // Functionality for all copy buttons
         document.querySelectorAll('.copy-button').forEach(button => {
             button.addEventListener('click', () => {
                 const codeBlock = button.previousElementSibling;
@@ -608,7 +753,6 @@ MainTab:Activate()</code></pre>
             });
         });
         
-        // Highlight active navigation link on scroll
         const sections = document.querySelectorAll('section');
         const navLinks = document.querySelectorAll('.sidebar-nav li a');
 
