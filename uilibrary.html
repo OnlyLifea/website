@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeasHub | Docs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #23272a;
+            --surface-color: #2c2f33;
+            --sidebar-color: #202225;
+            --primary-color: #5865F2;
+            --primary-hover-color: #4f5bda;
+            --text-color: #dcddde;
+            --header-color: #ffffff;
+            --border-color: #40444b;
+            --code-bg-color: #1e2124;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.7;
+        }
+
+        .docs-container {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-color);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 25px;
+            box-sizing: border-box;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--header-color);
+            margin-bottom: 30px;
+        }
+
+        .sidebar-header span {
+            color: var(--primary-color);
+        }
+
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav li a {
+            display: block;
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 5px;
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .sidebar-nav li a:hover {
+            background-color: var(--surface-color);
+            color: var(--header-color);
+        }
+        
+        .sidebar-nav li a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .content {
+            margin-left: 260px; /* Same as sidebar width */
+            padding: 40px 50px;
+            width: calc(100% - 260px);
+            box-sizing: border-box;
+        }
+
+        section {
+            margin-bottom: 70px;
+            scroll-margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: var(--header-color);
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        
+        h2 .highlight {
+            color: var(--primary-color);
+        }
+
+        h3 {
+            font-size: 1.6rem;
+            color: var(--header-color);
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        
+        p, li {
+            font-size: 1rem;
+        }
+
+        .code-block-wrapper {
+            position: relative;
+            margin: 25px 0;
+        }
+
+        pre {
+            background-color: var(--code-bg-color);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #b9bbbe;
+            font-family: 'Source Code Pro', monospace;
+        }
+
+        code {
+            font-family: 'Source Code Pro', monospace;
+        }
+        
+        /* Inline code */
+        :not(pre) > code {
+            background-color: var(--surface-color);
+            color: var(--primary-color);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--surface-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .copy-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 25px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--surface-color);
+            color: var(--header-color);
+            font-weight: 600;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="docs-container">
+        <nav class="sidebar">
+            <div class="sidebar-header">Lifeas<span style="color: var(--primary-color);">Hub</span></div>
+            <ul class="sidebar-nav">
+                <li><a href="#introduction" class="active">Introduction</a></li>
+                <li><a href="#setup">Setup</a></li>
+                <li><a href="#initialization">Initialization</a></li>
+                <li><a href="#tabs">Tabs</a></li>
+                <li><a href="#elements">Elements</a></li>
+                <li><a href="#advanced-features">Advanced Features</a></li>
+                <li><a href="#example">Full Example</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <section id="introduction">
+                <h2>Welcome to the <span class="highlight">LifeasHub</span> UI Library</h2>
+                <p>This document is designed to help you understand all the features and usage of the LifeasHub UI library. With its modern, flexible, and customizable structure, you can easily create stylish interfaces for your projects.</p>
+                <p>The library is built on a tabbed structure and offers many ready-to-use elements such as buttons, sliders, and dropdown menus. It also comes with advanced features like theme management and a modern notification system. You can find more info at <a href="https://www.lifeashub.store/uilibrary" target="_blank" style="color: var(--primary-color);">our official website</a>.</p>
+            </section>
+
+            <section id="setup">
+                <h2>Setup</h2>
+                <p>Adding the library to your project is very simple. Just paste the following code into a <code>LocalScript</code> (e.g., in <code>StarterPlayerScripts</code>).</p>
+                <div class="code-block-wrapper">
+                    <pre><code>-- Load the library from its source
+local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/projectnexus/refs/heads/main/uilibrary"))()</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+            </section>
+            
+            <section id="initialization">
+                <h2>Initializing the Library <span class="highlight">Library:Init</span></h2>
+                <p>The <code>Library:Init()</code> function is used to create the main window of the interface. This function takes a table containing the basic settings for the window and returns a <code>Window</code> object that you can work with.</p>
+                 <div class="code-block-wrapper">
+                    <pre><code>local Window = LifeasHubLibrary:Init({
+    name = "PROJECT NAME",
+    name2 = "LifeasHub",
+    name3 = "v1.0 | by Your Name",
+    defaultTheme = "Blurple",
+    defaultThemeLevel = 1
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+                <h3>Parameters</h3>
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>name</code></td><td>string</td><td>The main title in the top-left corner of the window.</td></tr>
+                        <tr><td><code>name2</code></td><td>string</td><td>The second, colored title that appears next to the main title.</td></tr>
+                        <tr><td><code>name3</code></td><td>string</td><td>A subtitle that appears to the right of the titles (e.g., version).</td></tr>
+                        <tr><td><code>defaultTheme</code></td><td>string</td><td>The initial theme. E.g., 'Red', 'Green', 'Blurple'.</td></tr>
+                        <tr><td><code>defaultThemeLevel</code></td><td>integer</td><td>Background theme intensity (0: Off, 1: Standard, 2: Intense).</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="tabs">
+                <h2>Tabs <span class="highlight">Window:CreateTab</span></h2>
+                <p>All interface elements are contained within tabs. You can create a new tab using the <code>Window:CreateTab()</code> function.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>local MainTab = Window:CreateTab({ name = 'Main' })
+local SettingsTab = Window:CreateTab({ name = 'Settings' })
+
+-- This makes the tab visible when the UI is first opened
+MainTab:Activate()</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+                <h3>Methods</h3>
+                <p><code>Tab:Activate()</code>: Makes the corresponding tab visible and active. You should use this method to ensure a tab is displayed when the UI first loads.</p>
+            </section>
+
+            <section id="elements">
+                <h2>Elements</h2>
+                <p>The library provides various elements to build your interface. All elements are created from a <code>Tab</code> object.</p>
+
+                <h3>Button</h3>
+                <p>A standard button that performs an action when clicked.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>MainTab:Button({
+    name = "Send Notification",
+    callback = function()
+        Window:Notify({title="Success!", content="The button works!", type="success"})
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+                
+                <h3>Toggle</h3>
+                <p>A switch that can be turned on or off.</p>
+                 <div class="code-block-wrapper">
+                    <pre><code>SettingsTab:Toggle({
+    title = "Show ESP",
+    callback = function(isEnabled)
+        print("ESP status: ", isEnabled)
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
+                <h3>Slider</h3>
+                <p>Used to select a numerical value within a specific range.</p>
+                 <div class="code-block-wrapper">
+                    <pre><code>SettingsTab:Slider({
+    title = "WalkSpeed",
+    min = 16,
+    max = 100,
+    default = 16,
+    callback = function(value)
+        print("New walk speed: ", value)
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
+                <h3>Dropdown</h3>
+                <p>A dropdown menu used for single or multiple selections from a list.</p>
+                 <div class="code-block-wrapper">
+                    <pre><code>SettingsTab:Dropdown({
+    title = "Target Part",
+    items = {"Head", "Torso", "Legs"},
+    multiSelect = false,
+    callback = function(selected)
+        print("Selected target: ", selected)
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
+                <h3>TextInput</h3>
+                <p>A box for getting text input from the user.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>MainTab:TextInput({
+    title = "Custom Name",
+    placeholder = "Enter your new name...",
+    callback = function(text)
+        Window:Notify({title="Name Changed", content = "Your new name is: " .. text})
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
+                <h3>Label</h3>
+                <p>Used to separate groups of elements or to add a heading to a section.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>SettingsTab:Label({message = "General Settings"})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
+                <h3>Paragraph</h3>
+                <p>An informational box containing a title, a long description, and an optional image.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>MainTab:Paragraph({
+    title = "About The Project",
+    content = "This UI was designed to provide the best user experience.",
+    image = "rbxassetid://6019884959"
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+            </section>
+            
+            <section id="advanced-features">
+                <h2>Advanced Features</h2>
+                <p>Powerful features offered by the library beyond the basic elements.</p>
+                
+                <h3>Notification System <span class="highlight">Window:Notify</span></h3>
+                <p>Displays modern, animated notifications in the top-right corner of the screen.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>-- Notification with an icon
+Window:Notify({
+    title = "Warning!",
+    content = "You are about to reset the settings.",
+    type = "warning",
+    duration = 4
+})
+
+-- Notification with a banner image
+Window:Notify({
+    title = "Update Available!",
+    content = "Version 2.0 has been released.",
+    image = "rbxassetid://2853763354",
+    imageStyle = "banner"
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+                <h3>Parameters</h3>
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>title</code></td><td>string</td><td>The title of the notification.</td></tr>
+                        <tr><td><code>content</code></td><td>string</td><td>The content of the notification.</td></tr>
+                        <tr><td><code>duration</code></td><td>number</td><td>How long it stays on screen (seconds). Default: 5.</td></tr>
+                        <tr><td><code>type</code></td><td>string</td><td>Preset icon type: 'success', 'warning', 'error', 'info'.</td></tr>
+                        <tr><td><code>image</code></td><td>string</td><td>An rbxassetid for a custom image.</td></tr>
+                        <tr><td><code>imageStyle</code></td><td>string</td><td>Image style: 'icon' (default) or 'banner'.</td></tr>
+                    </tbody>
+                </table>
+                
+                <h3>Theme Management</h3>
+                <p>You can change the colors and theme of the interface in real-time.</p>
+                <p><code>Window:SetTheme(themeName)</code>: Changes the accent color of the interface.</p>
+                <p><code>Window:SetBackgroundThemeLevel(level)</code>: Sets how much the background is affected by the theme.</p>
+            </section>
+
+            <section id="example">
+                <h2>Full <span class="highlight">Example</span></h2>
+                <p>Here is a complete example script demonstrating many features of the library in action. You can copy and paste this into a <code>LocalScript</code> to see how everything works together.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>-- 1. Load the library
+local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/projectnexus/refs/heads/main/uilibrary"))()
+
+-- 2. Initialize the main window
+local Window = LifeasHubLibrary:Init({
+    name = "LifeasHub DEMO",
+    name2 = "v2.1",
+    name3 = "by LifeasHub Team",
+    defaultTheme = "Green",
+    defaultThemeLevel = 1
+})
+
+-- 3. Create tabs
+local MainTab = Window:CreateTab({ name = 'Showcase' })
+local SettingsTab = Window:CreateTab({ name = 'Options' })
+
+-- 4. Populate the MainTab with elements
+MainTab:Paragraph({
+    title = "Welcome to the Showcase!",
+    content = "This tab demonstrates various notification types and user input elements. Click the buttons below to see different notifications.",
+    image = "rbxassetid://6019884959" -- Example Image
+})
+
+MainTab:Label({message = "Notification Tests"})
+
+MainTab:Button({
+    name = "Success Notification",
+    callback = function()
+        Window:Notify({title="Success", content="The operation was completed successfully.", type="success"})
+    end
+})
+
+MainTab:Button({
+    name = "Error Notification (Custom Duration)",
+    callback = function()
+        Window:Notify({title="Error!", content="Failed to connect to the server.", type="error", duration = 8})
+    end
+})
+
+MainTab:Button({
+    name = "Warning Notification",
+    callback = function()
+        Window:Notify({title="Warning", content="Your settings are not saved.", type="warning"})
+    end
+})
+
+MainTab:Button({
+    name = "Info Notification with Banner",
+    callback = function()
+        Window:Notify({title="Did you know?", content="LifeasHub UI supports banner images.", type="info", image = "rbxassetid://2853763354", imageStyle = "banner"})
+    end
+})
+
+MainTab:Label({message = "Input Example"})
+
+MainTab:TextInput({
+    title = "Enter a message",
+    placeholder = "Type something here...",
+    callback = function(text)
+        if text and #text > 0 then
+            Window:Notify({title="Message Sent", content = "You entered: " .. text, type="info"})
+        else
+            Window:Notify({title="Oops!", content = "You didn't enter anything.", type="warning"})
+        end
+    end
+})
+
+
+-- 5. Populate the SettingsTab with elements
+SettingsTab:Label({message = "Visual Settings"})
+
+SettingsTab:Toggle({
+    title = "Enable Glow Effect",
+    callback = function(isEnabled)
+        print("Glow effect is now:", isEnabled)
+        Window:Notify({title="Settings Updated", content="Glow effect set to " .. tostring(isEnabled), type="info"})
+    end
+})
+
+SettingsTab:Slider({
+    title = "Field of View",
+    min = 70,
+    max = 120,
+    default = 80,
+    callback = function(value)
+        print("FOV set to: ", value)
+        -- You could set game.Workspace.CurrentCamera.FieldOfView = value here
+    end
+})
+
+SettingsTab:Label({message = "Selection Controls"})
+
+SettingsTab:Dropdown({
+    title = "Aim Target (Single)",
+    items = {"Head", "Torso", "Right Arm", "Left Arm"},
+    multiSelect = false,
+    callback = function(selectedItem)
+        print("Single selection:", selectedItem)
+    end
+})
+
+SettingsTab:Dropdown({
+    title = "ESP Features (Multiple)",
+    items = {"Boxes", "Names", "Tracers", "Health"},
+    multiSelect = true,
+    callback = function(selectedItems)
+        print("Multi-selection changed. Current active features:")
+        for item, isSelected in pairs(selectedItems) do
+            if isSelected then
+                print("- " .. item)
+            end
+        end
+    end
+})
+
+SettingsTab:Label({message = "Theme Controls"})
+
+SettingsTab:Dropdown({
+    title = "Accent Color",
+    items = {"Red", "Green", "Blue", "Yellow", "Pink", "Orange", "Purple", "Blurple"},
+    multiSelect = false,
+    callback = function(selectedTheme)
+        Window:SetTheme(selectedTheme)
+        Window:Notify({
+            title = "Theme Changed", 
+            content = "Accent color set to " .. selectedTheme, 
+            type = "info", 
+            duration = 3
+        })
+    end
+})
+
+SettingsTab:Slider({
+    title = "Background Intensity",
+    min = 0,
+    max = 2,
+    default = 1,
+    callback = function(value)
+        local intValue = math.floor(value + 0.5) -- Round to nearest integer
+        Window:SetBackgroundThemeLevel(intValue)
+    end
+})
+
+
+-- 6. Activate the first tab to make it visible
+MainTab:Activate()</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // Functionality for all copy buttons
+        document.querySelectorAll('.copy-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const codeBlock = button.previousElementSibling;
+                const code = codeBlock.querySelector('code').textContent;
+
+                navigator.clipboard.writeText(code).then(() => {
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            });
+        });
+        
+        // Highlight active navigation link on scroll
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sidebar-nav li a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href') === '#' + current) {
+                    a.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
