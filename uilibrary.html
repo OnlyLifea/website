@@ -296,21 +296,90 @@ MainTab:Activate()</code></pre>
             <section id="elements">
                 <h2>Elements</h2>
                 <p>The library provides various elements to build your interface. All elements are created from a <code>Tab</code> object.</p>
-                <!-- Element examples are shortened for brevity but remain correct -->
+
                 <h3>Button</h3>
                 <p>A standard button that performs an action when clicked.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>MainTab:Button({
+    name = "Send Notification",
+    callback = function()
+        Window:Notify({title="Success!", content="The button works!", type="success"})
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+                
                 <h3>Toggle</h3>
                 <p>A switch that can be turned on or off.</p>
+                 <div class="code-block-wrapper">
+                    <pre><code>SettingsTab:Toggle({
+    title = "Show ESP",
+    callback = function(isEnabled)
+        print("ESP status: ", isEnabled)
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
                 <h3>Slider</h3>
                 <p>Used to select a numerical value within a specific range.</p>
+                 <div class="code-block-wrapper">
+                    <pre><code>SettingsTab:Slider({
+    title = "WalkSpeed",
+    min = 16,
+    max = 100,
+    default = 16,
+    callback = function(value)
+        print("New walk speed: ", value)
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
                 <h3>Dropdown</h3>
                 <p>A dropdown menu used for single or multiple selections from a list.</p>
+                 <div class="code-block-wrapper">
+                    <pre><code>SettingsTab:Dropdown({
+    title = "Target Part",
+    items = {"Head", "Torso", "Legs"},
+    multiSelect = false,
+    callback = function(selected)
+        print("Selected target: ", selected)
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
                 <h3>TextInput</h3>
                 <p>A box for getting text input from the user.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>MainTab:TextInput({
+    title = "Custom Name",
+    placeholder = "Enter your new name...",
+    callback = function(text)
+        Window:Notify({title="Name Changed", content = "Your new name is: " .. text})
+    end
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
                 <h3>Label</h3>
                 <p>Used to separate groups of elements or to add a heading to a section.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>SettingsTab:Label({message = "General Settings"})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
                 <h3>Paragraph</h3>
                 <p>An informational box containing a title, a long description, and an optional image.</p>
+                <div class="code-block-wrapper">
+                    <pre><code>MainTab:Paragraph({
+    title = "About The Project",
+    content = "This UI was designed to provide the best user experience.",
+    image = "rbxassetid://6019884959"
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
             </section>
             
             <section id="advanced-features">
@@ -319,7 +388,25 @@ MainTab:Activate()</code></pre>
                 
                 <h3>Notification System <span class="highlight">Window:Notify</span></h3>
                 <p>Displays modern, animated notifications. Position can be set during initialization.</p>
-                
+                 <div class="code-block-wrapper">
+                    <pre><code>-- Notification with an icon
+Window:Notify({
+    title = "Warning!",
+    content = "You are about to reset the settings.",
+    type = "warning",
+    duration = 4
+})
+
+-- Notification with a banner image
+Window:Notify({
+    title = "Update Available!",
+    content = "Version 2.0 has been released.",
+    image = "rbxassetid://2853763354",
+    imageStyle = "banner"
+})</code></pre>
+                    <button class="copy-button">Copy</button>
+                </div>
+
                 <h3>Theme Management</h3>
                 <p>You can change the colors and theme of the interface in real-time.</p>
                 <p><code>Window:SetTheme(themeName)</code>: Changes the accent color of the interface.</p>
