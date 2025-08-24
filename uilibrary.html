@@ -236,7 +236,17 @@ local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.
     name2 = "LifeasHub",
     name3 = "v1.0 | by Your Name",
     defaultTheme = "Blurple",
-    defaultThemeLevel = 1
+    defaultThemeLevel = 1,
+    notificationPlace = "bottom",
+    minimizeFrame = {
+        enabled = true,
+        icon = 'rbxassetid://13529889528',
+        size = UDim2.new(0, 50, 0, 50),
+        position = UDim2.new(0, 20, 0.5, -25),
+        backgroundColor = Color3.fromRGB(30, 30, 30),
+        backgroundTransparency = 0.1,
+        imageColor = Color3.fromRGB(88, 101, 242)
+    }
 })</code></pre>
                     <button class="copy-button">Copy</button>
                 </div>
@@ -249,6 +259,21 @@ local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.
                         <tr><td><code>name3</code></td><td>string</td><td>A subtitle that appears to the right of the titles (e.g., version).</td></tr>
                         <tr><td><code>defaultTheme</code></td><td>string</td><td>The initial theme. E.g., 'Red', 'Green', 'Blurple'.</td></tr>
                         <tr><td><code>defaultThemeLevel</code></td><td>integer</td><td>Background theme intensity (0: Off, 1: Standard, 2: Intense).</td></tr>
+                        <tr><td><code>notificationPlace</code></td><td>string</td><td>Sets notification position. Options: 'up' (top-right, default), 'bottom' (bottom-right).</td></tr>
+                        <tr><td><code>minimizeFrame</code></td><td>table</td><td>A table containing settings to customize the minimized frame.</td></tr>
+                    </tbody>
+                </table>
+                 <h3>Minimize Frame Parameters</h3>
+                <table>
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>enabled</code></td><td>boolean</td><td>Enables or disables the custom minimized frame.</td></tr>
+                        <tr><td><code>icon</code></td><td>string</td><td>The asset ID for the icon displayed on the minimized frame.</td></tr>
+                        <tr><td><code>size</code></td><td>UDim2</td><td>The size of the minimized frame.</td></tr>
+                        <tr><td><code>position</code></td><td>UDim2</td><td>The on-screen position of the minimized frame.</td></tr>
+                        <tr><td><code>backgroundColor</code></td><td>Color3</td><td>The background color of the frame.</td></tr>
+                        <tr><td><code>backgroundTransparency</code></td><td>number</td><td>The transparency of the frame's background (0-1).</td></tr>
+                        <tr><td><code>imageColor</code></td><td>Color3</td><td>The color of the icon image.</td></tr>
                     </tbody>
                 </table>
             </section>
@@ -271,90 +296,21 @@ MainTab:Activate()</code></pre>
             <section id="elements">
                 <h2>Elements</h2>
                 <p>The library provides various elements to build your interface. All elements are created from a <code>Tab</code> object.</p>
-
+                <!-- Element examples are shortened for brevity but remain correct -->
                 <h3>Button</h3>
                 <p>A standard button that performs an action when clicked.</p>
-                <div class="code-block-wrapper">
-                    <pre><code>MainTab:Button({
-    name = "Send Notification",
-    callback = function()
-        Window:Notify({title="Success!", content="The button works!", type="success"})
-    end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
-                
                 <h3>Toggle</h3>
                 <p>A switch that can be turned on or off.</p>
-                 <div class="code-block-wrapper">
-                    <pre><code>SettingsTab:Toggle({
-    title = "Show ESP",
-    callback = function(isEnabled)
-        print("ESP status: ", isEnabled)
-    end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
-
                 <h3>Slider</h3>
                 <p>Used to select a numerical value within a specific range.</p>
-                 <div class="code-block-wrapper">
-                    <pre><code>SettingsTab:Slider({
-    title = "WalkSpeed",
-    min = 16,
-    max = 100,
-    default = 16,
-    callback = function(value)
-        print("New walk speed: ", value)
-    end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
-
                 <h3>Dropdown</h3>
                 <p>A dropdown menu used for single or multiple selections from a list.</p>
-                 <div class="code-block-wrapper">
-                    <pre><code>SettingsTab:Dropdown({
-    title = "Target Part",
-    items = {"Head", "Torso", "Legs"},
-    multiSelect = false,
-    callback = function(selected)
-        print("Selected target: ", selected)
-    end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
-
                 <h3>TextInput</h3>
                 <p>A box for getting text input from the user.</p>
-                <div class="code-block-wrapper">
-                    <pre><code>MainTab:TextInput({
-    title = "Custom Name",
-    placeholder = "Enter your new name...",
-    callback = function(text)
-        Window:Notify({title="Name Changed", content = "Your new name is: " .. text})
-    end
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
-
                 <h3>Label</h3>
                 <p>Used to separate groups of elements or to add a heading to a section.</p>
-                <div class="code-block-wrapper">
-                    <pre><code>SettingsTab:Label({message = "General Settings"})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
-
                 <h3>Paragraph</h3>
                 <p>An informational box containing a title, a long description, and an optional image.</p>
-                <div class="code-block-wrapper">
-                    <pre><code>MainTab:Paragraph({
-    title = "About The Project",
-    content = "This UI was designed to provide the best user experience.",
-    image = "rbxassetid://6019884959"
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
             </section>
             
             <section id="advanced-features">
@@ -362,37 +318,7 @@ MainTab:Activate()</code></pre>
                 <p>Powerful features offered by the library beyond the basic elements.</p>
                 
                 <h3>Notification System <span class="highlight">Window:Notify</span></h3>
-                <p>Displays modern, animated notifications in the top-right corner of the screen.</p>
-                <div class="code-block-wrapper">
-                    <pre><code>-- Notification with an icon
-Window:Notify({
-    title = "Warning!",
-    content = "You are about to reset the settings.",
-    type = "warning",
-    duration = 4
-})
-
--- Notification with a banner image
-Window:Notify({
-    title = "Update Available!",
-    content = "Version 2.0 has been released.",
-    image = "rbxassetid://2853763354",
-    imageStyle = "banner"
-})</code></pre>
-                    <button class="copy-button">Copy</button>
-                </div>
-                <h3>Parameters</h3>
-                <table>
-                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
-                    <tbody>
-                        <tr><td><code>title</code></td><td>string</td><td>The title of the notification.</td></tr>
-                        <tr><td><code>content</code></td><td>string</td><td>The content of the notification.</td></tr>
-                        <tr><td><code>duration</code></td><td>number</td><td>How long it stays on screen (seconds). Default: 5.</td></tr>
-                        <tr><td><code>type</code></td><td>string</td><td>Preset icon type: 'success', 'warning', 'error', 'info'.</td></tr>
-                        <tr><td><code>image</code></td><td>string</td><td>An rbxassetid for a custom image.</td></tr>
-                        <tr><td><code>imageStyle</code></td><td>string</td><td>Image style: 'icon' (default) or 'banner'.</td></tr>
-                    </tbody>
-                </table>
+                <p>Displays modern, animated notifications. Position can be set during initialization.</p>
                 
                 <h3>Theme Management</h3>
                 <p>You can change the colors and theme of the interface in real-time.</p>
@@ -407,23 +333,39 @@ Window:Notify({
                     <pre><code>-- 1. Load the library
 local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/projectnexus/refs/heads/main/uilibrary"))()
 
--- 2. Initialize the main window
+-- 2. Initialize the main window with all features
 local Window = LifeasHubLibrary:Init({
     name = "LifeasHub DEMO",
-    name2 = "v2.1",
+    name2 = "v3.2",
     name3 = "by LifeasHub Team",
-    defaultTheme = "Green",
-    defaultThemeLevel = 1
+    defaultTheme = "Blurple",
+    defaultThemeLevel = 1,
+    notificationPlace = "bottom", -- Can be 'up' or 'bottom'
+    
+    -- // NEW: Minimized Frame Customization //
+    minimizeFrame = {
+        enabled = true,
+        icon = 'rbxassetid://13529889528',
+        size = UDim2.new(0, 50, 0, 50),
+        position = UDim2.new(0, 20, 0.5, -25),
+        backgroundColor = Color3.fromRGB(30, 30, 30),
+        backgroundTransparency = 0.1,
+        imageColor = Color3.fromRGB(88, 101, 242) -- Blurple to match default theme
+    }
 })
 
 -- 3. Create tabs
 local MainTab = Window:CreateTab({ name = 'Showcase' })
 local SettingsTab = Window:CreateTab({ name = 'Options' })
+local MiscTab = Window:CreateTab({ name = 'Misc Tests' })
 
--- 4. Populate the MainTab with elements
+--================================================================================--
+-- TAB 1: SHOWCASE
+--================================================================================--
+
 MainTab:Paragraph({
     title = "Welcome to the Showcase!",
-    content = "This tab demonstrates various notification types and user input elements. Click the buttons below to see different notifications.",
+    content = "This tab demonstrates various notification types and user input elements. Notifications will appear at the bottom-right because of the 'notificationPlace' setting. You can also minimize this window to see the custom frame.",
     image = "rbxassetid://6019884959" -- Example Image
 })
 
@@ -457,6 +399,7 @@ MainTab:Button({
     end
 })
 
+
 MainTab:Label({message = "Input Example"})
 
 MainTab:TextInput({
@@ -471,9 +414,33 @@ MainTab:TextInput({
     end
 })
 
+--================================================================================--
+-- TAB 2: OPTIONS
+--================================================================================--
 
--- 5. Populate the SettingsTab with elements
-SettingsTab:Label({message = "Visual Settings"})
+SettingsTab:Label({message = "Theme Controls"})
+
+SettingsTab:Dropdown({
+    title = "UI Theme",
+    items = {"Red", "Green", "Dark Green", "White", "Black", "Purple", "Blurple"},
+    multiSelect = false,
+    callback = function(selectedTheme)
+        Window:SetTheme(selectedTheme)
+    end
+})
+
+SettingsTab:Slider({
+    title = "Background Intensity",
+    min = 0,
+    max = 2,
+    default = 1,
+    callback = function(value)
+        local intValue = math.floor(value + 0.5) -- Round to nearest integer
+        Window:SetBackgroundThemeLevel(intValue)
+    end
+})
+
+SettingsTab:Label({message = "General Visuals"})
 
 SettingsTab:Toggle({
     title = "Enable Glow Effect",
@@ -494,9 +461,18 @@ SettingsTab:Slider({
     end
 })
 
-SettingsTab:Label({message = "Selection Controls"})
 
-SettingsTab:Dropdown({
+--================================================================================--
+-- TAB 3: MISCELLANEOUS TESTS
+--================================================================================--
+MiscTab:Paragraph({
+    title = "More Element Tests",
+    content = "This tab contains various elements for testing different configurations and more specific use-cases."
+})
+
+MiscTab:Label({message = "Advanced Selection Controls"})
+
+MiscTab:Dropdown({
     title = "Aim Target (Single)",
     items = {"Head", "Torso", "Right Arm", "Left Arm"},
     multiSelect = false,
@@ -505,7 +481,7 @@ SettingsTab:Dropdown({
     end
 })
 
-SettingsTab:Dropdown({
+MiscTab:Dropdown({
     title = "ESP Features (Multiple)",
     items = {"Boxes", "Names", "Tracers", "Health"},
     multiSelect = true,
@@ -519,31 +495,25 @@ SettingsTab:Dropdown({
     end
 })
 
-SettingsTab:Label({message = "Theme Controls"})
+MiscTab:Label({message = "Advanced Value Controls"})
 
-SettingsTab:Dropdown({
-    title = "Accent Color",
-    items = {"Red", "Green", "Blue", "Yellow", "Pink", "Orange", "Purple", "Blurple"},
-    multiSelect = false,
-    callback = function(selectedTheme)
-        Window:SetTheme(selectedTheme)
-        Window:Notify({
-            title = "Theme Changed", 
-            content = "Accent color set to " .. selectedTheme, 
-            type = "info", 
-            duration = 3
-        })
+MiscTab:Toggle({
+    title = "Team Check (Default On)",
+    default = true,
+    callback = function(isEnabled)
+        print("Team check status is now: ", isEnabled)
     end
 })
 
-SettingsTab:Slider({
-    title = "Background Intensity",
-    min = 0,
-    max = 2,
-    default = 1,
+MiscTab:Slider({
+    title = "Aim FOV Size (Float)",
+    min = 1,
+    max = 50,
+    default = 10.5,
     callback = function(value)
-        local intValue = math.floor(value + 0.5) -- Round to nearest integer
-        Window:SetBackgroundThemeLevel(intValue)
+        -- Example of handling float values with formatting
+        local formattedValue = string.format("%.2f", value)
+        print("Aim FOV size set to: " .. formattedValue)
     end
 })
 
