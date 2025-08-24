@@ -219,10 +219,10 @@
 
             <section id="setup">
                 <h2>Setup</h2>
-                <p>Adding the library to your project is very simple. Just paste the following code into a <code>LocalScript</code> (e.g., in <code>StarterPlayerScripts</code>).</p>
+                <p>Adding the library to your project is very simple. Just paste the following code into a <code>LocalScript</code> to execute it.</p>
                 <div class="code-block-wrapper">
-                    <pre><code>-- Load the library from its source
-local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/projectnexus/refs/heads/main/uilibrary"))()</code></pre>
+                    <pre><code>-- Execute the main script from its source
+loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/lifeashub/refs/heads/main/better"))()</code></pre>
                     <button class="copy-button">Copy</button>
                 </div>
             </section>
@@ -231,7 +231,10 @@ local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.
                 <h2>Initializing the Library <span class="highlight">Library:Init</span></h2>
                 <p>The <code>Library:Init()</code> function is used to create the main window of the interface. This function takes a table containing the basic settings for the window and returns a <code>Window</code> object that you can work with.</p>
                  <div class="code-block-wrapper">
-                    <pre><code>local Window = LifeasHubLibrary:Init({
+                    <pre><code>-- Assuming your main script returns the library table
+local LifeasHubLibrary = loadstring(game:HttpGet("..."))() -- This is just an example path
+
+local Window = LifeasHubLibrary:Init({
     name = "PROJECT NAME",
     name2 = "LifeasHub",
     name3 = "v1.0 | by Your Name",
@@ -415,10 +418,20 @@ Window:Notify({
 
             <section id="example">
                 <h2>Full <span class="highlight">Example</span></h2>
-                <p>Here is a complete example script demonstrating many features of the library in action. You can copy and paste this into a <code>LocalScript</code> to see how everything works together.</p>
+                <p>This is an example of how you might use the library, assuming the main script returns the library functions in a table called <code>LifeasHubLibrary</code>. The actual implementation might differ based on the script at the provided URL.</p>
                 <div class="code-block-wrapper">
-                    <pre><code>-- 1. Load the library
-local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/projectnexus/refs/heads/main/uilibrary"))()
+                    <pre><code>-- The main script is executed from the new URL.
+-- The following is a usage example based on the library's documented functions.
+-- You might need to adapt this code depending on how the main script works.
+
+-- For this example to work, we'll assume the main script returns a library table.
+local LifeasHubLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/barann222/lifeashub/refs/heads/main/better"))()
+
+-- Check if the library was returned successfully before using it
+if not LifeasHubLibrary or not LifeasHubLibrary.Init then
+    warn("LifeasHub Library did not load correctly or is a self-executing script.")
+    return
+end
 
 -- 2. Initialize the main window with all features
 local Window = LifeasHubLibrary:Init({
@@ -429,7 +442,7 @@ local Window = LifeasHubLibrary:Init({
     defaultThemeLevel = 1,
     notificationPlace = "bottom", -- Can be 'up' or 'bottom'
     
-    -- // NEW: Minimized Frame Customization //
+    -- // Minimized Frame Customization //
     minimizeFrame = {
         enabled = true,
         icon = 'rbxassetid://13529889528',
@@ -466,9 +479,9 @@ MainTab:Button({
 })
 
 MainTab:Button({
-    name = "Error Notification (Custom Duration)",
+    name = "Error Notification",
     callback = function()
-        Window:Notify({title="Error!", content="Failed to connect to the server.", type="error", duration = 8})
+        Window:Notify({title="Error!", content="Failed to connect to the server.", type="error"})
     end
 })
 
@@ -478,14 +491,6 @@ MainTab:Button({
         Window:Notify({title="Warning", content="Your settings are not saved.", type="warning"})
     end
 })
-
-MainTab:Button({
-    name = "Info Notification with Banner",
-    callback = function()
-        Window:Notify({title="Did you know?", content="LifeasHub UI supports banner images.", type="info", image = "rbxassetid://2853763354", imageStyle = "banner"})
-    end
-})
-
 
 MainTab:Label({message = "Input Example"})
 
@@ -533,7 +538,6 @@ SettingsTab:Toggle({
     title = "Enable Glow Effect",
     callback = function(isEnabled)
         print("Glow effect is now:", isEnabled)
-        Window:Notify({title="Settings Updated", content="Glow effect set to " .. tostring(isEnabled), type="info"})
     end
 })
 
@@ -544,28 +548,15 @@ SettingsTab:Slider({
     default = 80,
     callback = function(value)
         print("FOV set to: ", value)
-        -- You could set game.Workspace.CurrentCamera.FieldOfView = value here
     end
 })
-
 
 --================================================================================--
 -- TAB 3: MISCELLANEOUS TESTS
 --================================================================================--
 MiscTab:Paragraph({
     title = "More Element Tests",
-    content = "This tab contains various elements for testing different configurations and more specific use-cases."
-})
-
-MiscTab:Label({message = "Advanced Selection Controls"})
-
-MiscTab:Dropdown({
-    title = "Aim Target (Single)",
-    items = {"Head", "Torso", "Right Arm", "Left Arm"},
-    multiSelect = false,
-    callback = function(selectedItem)
-        print("Single selection:", selectedItem)
-    end
+    content = "This tab contains various elements for testing different configurations."
 })
 
 MiscTab:Dropdown({
@@ -573,7 +564,6 @@ MiscTab:Dropdown({
     items = {"Boxes", "Names", "Tracers", "Health"},
     multiSelect = true,
     callback = function(selectedItems)
-        print("Multi-selection changed. Current active features:")
         for item, isSelected in pairs(selectedItems) do
             if isSelected then
                 print("- " .. item)
@@ -582,8 +572,6 @@ MiscTab:Dropdown({
     end
 })
 
-MiscTab:Label({message = "Advanced Value Controls"})
-
 MiscTab:Toggle({
     title = "Team Check (Default On)",
     default = true,
@@ -591,19 +579,6 @@ MiscTab:Toggle({
         print("Team check status is now: ", isEnabled)
     end
 })
-
-MiscTab:Slider({
-    title = "Aim FOV Size (Float)",
-    min = 1,
-    max = 50,
-    default = 10.5,
-    callback = function(value)
-        -- Example of handling float values with formatting
-        local formattedValue = string.format("%.2f", value)
-        print("Aim FOV size set to: " .. formattedValue)
-    end
-})
-
 
 -- 6. Activate the first tab to make it visible
 MainTab:Activate()</code></pre>
